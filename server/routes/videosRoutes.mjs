@@ -1,22 +1,30 @@
 import express from "express";
 import multer from "multer";
 import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 import Video from "../models/Video.mjs";
 
 const router = express.Router();
 
+// Решение для __dirname в ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 // Multer storage configuration
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const uploadDir = "./uploads/videos";
+    const uploadDir = path.join(__dirname, "../uploads/videos");
     if (!fs.existsSync(uploadDir)) {
       fs.mkdirSync(uploadDir, { recursive: true });
     }
     cb(null, uploadDir);
   },
   filename: (req, file, cb) => {
-    const uniqueName =
-      Date.now() + "-" + file.originalname.replace(/\s+/g, "_");
+    const uniqueName = `${Date.now()}-${file.originalname.replace(
+      /\s+/g,
+      "_"
+    )}`;
     cb(null, uniqueName);
   },
 });
@@ -34,6 +42,9 @@ const upload = multer({
 // Upload a new video
 router.post("/upload", upload.single("video"), async (req, res) => {
   try {
+    console.log("Request received:", req.file);
+    console.log("Request body:", req.body);
+
     const { title, description, category } = req.body;
 
     if (!req.file) {
@@ -52,8 +63,8 @@ router.post("/upload", upload.single("video"), async (req, res) => {
       .status(201)
       .json({ msg: "Video uploaded successfully", video: newVideo });
   } catch (err) {
-    console.error(err.message);
-    res.status(500).json({ msg: "Server error" });
+    console.error("Error during video upload:", err.message);
+    res.status(500).json({ msg: "Server error", error: err.message });
   }
 });
 
@@ -63,8 +74,8 @@ router.get("/", async (req, res) => {
     const videos = await Video.find();
     res.status(200).json(videos);
   } catch (err) {
-    console.error(err.message);
-    res.status(500).json({ msg: "Server error" });
+    console.error("Error fetching videos:", err.message);
+    res.status(500).json({ msg: "Server error", error: err.message });
   }
 });
 
@@ -77,8 +88,8 @@ router.get("/:id", async (req, res) => {
     }
     res.status(200).json(video);
   } catch (err) {
-    console.error(err.message);
-    res.status(500).json({ msg: "Server error" });
+    console.error("Error fetching video by ID:", err.message);
+    res.status(500).json({ msg: "Server error", error: err.message });
   }
 });
 
@@ -90,16 +101,21 @@ router.delete("/:id", async (req, res) => {
       return res.status(404).json({ msg: "Video not found" });
     }
 
-    // Delete video file from disk
-    fs.unlink(video.filePath, (err) => {
-      if (err) console.error("Error deleting file:", err);
-    });
+    
+    fs.unlink(video.filePath, async (err) => {
+      if (err) {
+        console.error("Error deleting file:", err.message);
+        return res
+          .status(500)
+          .json({ msg: "Error deleting video file", error: err.message });
+      }
 
-    await video.remove();
-    res.status(200).json({ msg: "Video deleted successfully" });
+      await video.deleteOne();
+      res.status(200).json({ msg: "Video deleted successfully" });
+    });
   } catch (err) {
-    console.error(err.message);
-    res.status(500).json({ msg: "Server error" });
+    console.error("Error deleting video:", err.message);
+    res.status(500).json({ msg: "Server error", error: err.message });
   }
 });
 

@@ -4,6 +4,7 @@ import cors from "cors";
 import authRoute from './routes/authRoute.mjs'
 import connectDB from "./config/db.mjs"
 import videosRoutes from "./routes/videosRoutes.mjs"
+import shortsVideos from './routes/shortsRoutes.mjs'
 
 dotenv.config();
 const app = express();
@@ -17,6 +18,7 @@ app.get('/', (req, res) => res.send('API Running'));
 
 app.use("/api/auth", authRoute);
 app.use("/api/videos", videosRoutes);
+app.use("/api/shorts", shortsVideos);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
