@@ -1,14 +1,31 @@
-import React from "react";
-import Header from "../components/Header";
+import React, { useEffect, useState } from "react";
+import VideosList from "../components/VideosList";
+import { fetchVideos } from "../api/api";
 
 const VideosPage = () => {
+  const [videos, setVideos] = useState([]);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const loadVideos = async () => {
+      try {
+        const data = await fetchVideos();
+        setVideos(data);
+      } catch (err) {
+        setError("Failed to load videos. Please try again later.");
+        console.error(err);
+      }
+    };
+
+    loadVideos();
+  }, []);
+
   return (
     <div>
-      <Header />
       <main>
         <h1>Videos</h1>
-        <p>Explore our collection of amazing videos!</p>
-        
+        {error && <p style={{ color: "red" }}>{error}</p>}
+        <VideosList videos={videos} />
       </main>
     </div>
   );

@@ -1,10 +1,14 @@
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background-color: white;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 10px 20px;
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #ddd;
+  padding: 0 20px;
+  z-index: 1000;
 }
 
 .hamburger-logo-container {
@@ -15,55 +19,29 @@
 }
 
 .hamburger-button {
-  width: 40px;
-  height: 40px;
-  font-size: 24px;
   background: none;
   border: none;
   cursor: pointer;
-  color: #333;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+}
+
+.hamburger-icon {
+  width: 40px;
+  height: 40px;
 }
 
 .logo {
   height: 40px;
-  width: 40px;
-}
-
-.search-bar-container {
-  flex: 2;
-  text-align: center;
-}
-
-.link-container {
-  flex: 1;
-  display: flex;
-  justify-content: flex-end;
-  gap: 15px;
-}
-
-.link {
-  text-decoration: none;
-  color: #007bff;
-  font-weight: bold;
-}
-
-.link:hover {
-  color: #0056b3;
 }
 
 .hamburger-menu {
-  position: fixed;
-  top: 0;
+  position: absolute;
+  top: 60px;
   left: 0;
   width: 250px;
-  height: 100%;
   background-color: #f8f9fa;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   padding: 20px;
   z-index: 1000;
+  height: 100vh;
 }
 
 .hamburger-menu ul {
@@ -73,15 +51,84 @@
 }
 
 .hamburger-menu ul li {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .hamburger-menu ul li a {
   text-decoration: none;
   color: #007bff;
-  font-size: 18px;
 }
 
 .hamburger-menu ul li a:hover {
   color: #0056b3;
+}
+
+.search-bar-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.search-bar-container input,
+.search-input {
+  width: 100%;
+  max-width: 400px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.link-container {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 40px;
+}
+
+.link-container .link {
+  padding: 8px 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.link-container .link:hover {
+  background-color: #f8f9fa;
+  border-color: #007bff;
+  color: #0056b3;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+}
+
+.content-container {
+  display: flex;
+  flex: 1;
+  margin-top: 60px;
+  transition: margin-left 0.3s ease;
+}
+
+.content-container.menu-closed .main-content {
+  margin-left: 0;
+}
+
+.content-container.menu-open .main-content {
+  margin-left: 90px;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  background-color: #f9f9f9;
 }

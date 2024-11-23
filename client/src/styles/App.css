@@ -1,0 +1,116 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+}
+
+
+.menu-open .main-content {
+  margin-left: 90px;
+  transition: margin-left 0.3s ease-in-out;
+}
+
+
+.menu-closed .main-content {
+  margin-left: 0;
+  transition: margin-left 0.3s ease-in-out;
+}
+
+.side-menu {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 90px;
+  height: calc(100vh - 60px);
+  background-color: white;
+  transition: transform 0.3s ease-in-out;
+}
+
+.side-menu.collapsed {
+  transform: translateX(-100%);
+}
+
+.content-container {
+  display: flex;
+  flex: 1;
+  margin-top: 60px; 
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  background-color: #ffffff;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 2000;
+}
+
+.hamburger-logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hamburger-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.hamburger-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.logo {
+  height: 40px;
+}
+
+.search-bar-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.search-bar-container input {
+  width: 100%;
+  max-width: 400px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.link-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.link-container .link {
+  padding: 8px 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+  background-color: white;
+  color: #007bff;
+  cursor: pointer;
+}
+
+.link-container .link:hover {
+  background-color: #f8f9fa;
+}
+
+.link-container .link:active {
+  background-color: #e0e0e0;
+}

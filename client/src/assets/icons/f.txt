@@ -1,9 +1,12 @@
+header
+
+
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import "../styles/header.css";
 import logo from "../assets/logo.png";
-import hamb from "../assets/icons/hamburger.png";
+import hamb from "../assets/hamburger.png";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -39,7 +42,11 @@ const Header = () => {
       {isMenuOpen && (
         <nav className="hamburger-menu" ref={menuRef}>
           <ul>
-          
+            <li>
+              <button onClick={toggleMenu} className="hamburger-button">
+                <img src={hamb} alt="Hamburger" className="hamburger-icon" />
+              </button>
+            </li>
             <li>
               <Link to="/videos" onClick={toggleMenu}>
                 Videos
@@ -71,3 +78,112 @@ const Header = () => {
 };
 
 export default Header;
+
+
+css
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 97%;
+  height: 60px;
+  background-color: white;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 1000;
+}
+
+.hamburger-logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.hamburger-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.hamburger-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.logo {
+  height: 40px;
+}
+
+.hamburger-menu {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  width: 250px;
+  background-color: #f8f9fa;
+  padding: 20px;
+  z-index: 1000;
+  height: 100vh;
+}
+
+.hamburger-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.hamburger-menu ul li {
+  margin-bottom: 15px;
+}
+
+.hamburger-menu ul li a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.hamburger-menu ul li a:hover {
+  color: #0056b3;
+}
+
+.search-bar-container {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+}
+
+.search-bar-container input {
+  width: 100%;
+  max-width: 400px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.link-container {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.link-container .link {
+  padding: 8px 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.link-container .link:hover {
+  background-color: #f8f9fa;
+  border-color: #007bff;
+  color: #0056b3;
+}

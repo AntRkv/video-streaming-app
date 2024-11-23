@@ -1,37 +1,40 @@
 import React, { useState } from "react";
-import { loginUser } from "../api/api";
-import { Link } from "react-router-dom";
+import { registerUser } from "../api/api";
 import "../styles/authPage.css";
-import { useNavigate } from "react-router-dom";
 
-const LoginPage = () => {
+const RegisterPage = () => {
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
- 
-
-  const navigate = useNavigate();
-
-  const handleLogin = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-    console.log("Login clicked");
     try {
-      const token = await loginUser(email, password);
-      console.log("Token received:", token);
-      localStorage.setItem("token", token);
+      await registerUser(username, email, password);
+      setSuccess("Registration successful. You can now log in.");
       setError("");
-      navigate("/account");
+      setUsername("");
+      setEmail("");
+      setPassword("");
     } catch (err) {
-      console.error("Login error:", err);
-      setError("Login failed. Please check your credentials.");
+      setError("Registration failed. Please try again.");
+      setSuccess("");
     }
   };
 
   return (
     <div className="container">
-      <h1 className="title">Login</h1>
-      <form onSubmit={handleLogin} className="form">
+      <h1 className="title">Register</h1>
+      <form onSubmit={handleRegister} className="form">
+        <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          className="input"
+        />
         <input
           type="email"
           placeholder="Email"
@@ -47,18 +50,13 @@ const LoginPage = () => {
           className="input"
         />
         <button type="submit" className="button">
-          Login
+          Register
         </button>
       </form>
       {error && <p className="error">{error}</p>}
-      <p className="switchText">
-        Don't have an account?{" "}
-        <Link to="/register" className="switchLink">
-          Register
-        </Link>
-      </p>
+      {success && <p className="success">{success}</p>}
     </div>
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
