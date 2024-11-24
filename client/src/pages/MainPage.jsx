@@ -8,22 +8,34 @@ const MainPage = () => {
   const [shorts, setShorts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-
   const fetchVideos = async () => {
     try {
-      const videoResponse = await axios.get("/api/videos");
-      const shortsResponse = await axios.get("/api/shorts");
+      const token = localStorage.getItem("token");
+
+      const videoResponse = await axios.get("/api/videos", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const shortsResponse = await axios.get("/api/shorts", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       setVideos(videoResponse.data);
       setShorts(shortsResponse.data);
       setLoading(false);
     } catch (error) {
-      console.error("Error fetching videos:", error);
+      console.error(
+        "Error fetching videos:",
+        error.response?.data || error.message
+      );
       setLoading(false);
     }
   };
 
-  
   useEffect(() => {
     fetchVideos();
   }, []);

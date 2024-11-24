@@ -1,29 +1,24 @@
 import React, { useState } from "react";
 import { loginUser } from "../api/api";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/authPage.css";
-import { useNavigate } from "react-router-dom";
 
-const LoginPage = () => {
+const LoginPage = ({ setIsLoggedIn }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
- 
 
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    console.log("Login clicked");
     try {
       const token = await loginUser(email, password);
-      console.log("Token received:", token);
       localStorage.setItem("token", token);
       setError("");
-      navigate("/account");
+      setIsLoggedIn(true);
+      navigate("/user");
     } catch (err) {
-      console.error("Login error:", err);
       setError("Login failed. Please check your credentials.");
     }
   };

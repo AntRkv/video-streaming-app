@@ -1,20 +1,29 @@
 import React from "react";
-import VideoCard from "./VideoCard";
-import "../styles/videoslist.css";
+import "../styles/videosList.css";
 
 const VideosList = ({ videos }) => {
   return (
     <div className="videos-list">
-      {videos.map((video, index) => (
-        <VideoCard
-          key={index}
-          thumbnail={video.thumbnail}
-          title={video.title}
-          channel={video.channel}
-          views={video.views}
-          time={video.time}
-        />
-      ))}
+      {videos.length > 0 ? (
+        videos.map((video) => (
+          <div key={video._id} className="video-card">
+            <video
+              src={`http://localhost:3000/${video.filePath}`}
+              controls
+              className="video-preview"
+            ></video>
+            <div className="video-details">
+              <h3 className="video-title">{video.title}</h3>
+              <p className="video-channel">Channel: {video.channelName}</p>
+              <p className="video-date">
+                Uploaded: {new Date(video.createdAt).toLocaleDateString()}
+              </p>
+            </div>
+          </div>
+        ))
+      ) : (
+        <p>No videos available</p>
+      )}
     </div>
   );
 };

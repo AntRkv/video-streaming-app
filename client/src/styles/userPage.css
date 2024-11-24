@@ -1,0 +1,74 @@
+.user-page {
+  padding: 20px;
+}
+
+.user-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.account-info {
+  flex: 1;
+}
+
+.account-link {
+  display: inline-block;
+  margin-top: 10px;
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+}
+
+.account-link:hover {
+  color: #0056b3;
+}
+
+.logout-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #dc3545;
+  color: white;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background-color: #a71d2a;
+}
+
+.content-section {
+  margin-bottom: 20px;
+}
+
+.content-card {
+  background-color: #f8f9fa;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.content-card h4 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.content-card p {
+  margin: 5px 0;
+  color: #606060;
+}
+
+.content-card button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.content-card button:hover {
+  background-color: #0056b3;
+}

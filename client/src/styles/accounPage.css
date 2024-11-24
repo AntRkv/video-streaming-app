@@ -1,46 +1,50 @@
-.account-container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  text-align: center;
-}
-
-.account-info {
-  margin-bottom: 20px;
-  text-align: left;
-  background-color: #f8f9fa;
-  padding: 15px;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.account-info p {
+.account-input {
+  display: block;
+  width: 100%;
+  padding: 8px;
   margin: 10px 0;
-}
-
-.account-actions {
-  display: flex;
-  justify-content: space-around;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .button {
-  padding: 10px 20px;
+  margin: 10px 5px;
+  padding: 10px 15px;
   border: none;
-  border-radius: 5px;
-  color: white;
+  border-radius: 4px;
   cursor: pointer;
 }
 
 .edit-button {
   background-color: #007bff;
+  color: white;
 }
 
 .edit-button:hover {
   background-color: #0056b3;
 }
 
+.save-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.save-button:hover {
+  background-color: #218838;
+}
+
+.cancel-button {
+  background-color: #ffc107;
+  color: black;
+}
+
+.cancel-button:hover {
+  background-color: #e0a800;
+}
+
 .logout-button {
   background-color: #dc3545;
+  color: white;
 }
 
 .logout-button:hover {

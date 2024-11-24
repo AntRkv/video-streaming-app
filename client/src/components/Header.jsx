@@ -5,11 +5,11 @@ import "../styles/header.css";
 import logo from "../assets/logo.png";
 import hamb from "../assets/icons/hamburger.png";
 
-const Header = () => {
+const Header = ({ toggleMenu, isLoggedIn }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
 
-  const toggleMenu = () => {
+  const toggleMenuState = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
@@ -29,7 +29,7 @@ const Header = () => {
   return (
     <header className="header">
       <div className="hamburger-logo-container">
-        <button onClick={toggleMenu} className="hamburger-button">
+        <button onClick={toggleMenuState} className="hamburger-button">
           <img src={hamb} alt="Hamburger" className="hamburger-icon" />
         </button>
         <Link to="/" className="logo-link">
@@ -39,19 +39,18 @@ const Header = () => {
       {isMenuOpen && (
         <nav className="hamburger-menu" ref={menuRef}>
           <ul>
-          
             <li>
-              <Link to="/videos" onClick={toggleMenu}>
+              <Link to="/videos" onClick={toggleMenuState}>
                 Videos
               </Link>
             </li>
             <li>
-              <Link to="/shorts" onClick={toggleMenu}>
+              <Link to="/shorts" onClick={toggleMenuState}>
                 Shorts
               </Link>
             </li>
             <li>
-              <Link to="/account" onClick={toggleMenu}>
+              <Link to="/account" onClick={toggleMenuState}>
                 My Account
               </Link>
             </li>
@@ -62,9 +61,15 @@ const Header = () => {
         <SearchBar />
       </div>
       <div className="link-container">
-        <Link to="/login" className="link">
-          Sign in
-        </Link>
+        {isLoggedIn ? (
+          <Link to="/account" className="link">
+            My Account
+          </Link>
+        ) : (
+          <Link to="/login" className="link">
+            Sign in
+          </Link>
+        )}
       </div>
     </header>
   );

@@ -29,8 +29,8 @@ const SideMenu = ({ isMenuOpen }) => {
           </Link>
         </li>
         <li className="menu-item">
-          <Link to="/account">
-            <img src={UserIcon} alt="Account" className="menu-icon" />
+          <Link to="/user">
+            <img src={UserIcon} alt="User" className="menu-icon" />
             <span>Account</span>
           </Link>
         </li>
