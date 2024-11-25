@@ -1,10 +1,8 @@
-import React, { useState } from "react";
-import axios from "axios";
-
 const UploadVideo = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [videoUrl, setVideoUrl] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,17 +14,20 @@ const UploadVideo = () => {
         videoUrl,
       });
       console.log("Video uploaded:", response.data);
+      setMessage("Video uploaded successfully!");
       setTitle("");
       setDescription("");
       setVideoUrl("");
     } catch (error) {
       console.error("Error uploading video:", error);
+      setMessage("Failed to upload video. Please try again.");
     }
   };
 
   return (
     <div className="container">
       <h1>Upload Video</h1>
+      {message && <p>{message}</p>}
       <form onSubmit={handleSubmit}>
         <div>
           <label>Title</label>
