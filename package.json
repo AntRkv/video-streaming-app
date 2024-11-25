@@ -1,10 +1,10 @@
 {
   "name": "video-streaming-app",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.mjs",
   "scripts": {
     "start": "node server.mjs",
-    "server": "nodemon server/server.mjs"
+    "server": "nodemon server.mjs"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +15,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
-    "mongoose": "^8.8.2"
+    "mongoose": "^8.8.2",
+    "nodemon": "^3.1.7"
   }
 }
