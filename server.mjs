@@ -3,12 +3,14 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import bodyParser from "body-parser";
-import videoRoutes from "./routes/videoRoutes.mjs";
-
+import videoRoutes from "./backend/routes/videoRoutes.mjs";
+import connectDB from "./backend/config/db.mjs";
 
 dotenv.config();
-
 const app = express();
+
+connectDB();
+
 app.use(cors());
 app.use(bodyParser.json());
 
