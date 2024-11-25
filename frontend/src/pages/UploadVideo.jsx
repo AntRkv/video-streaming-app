@@ -11,7 +11,7 @@ const UploadVideo = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:5000/api/videos", {
+      const response = await axios.post("http://localhost:3000/api/videos", {
         title,
         description,
         videoUrl,
