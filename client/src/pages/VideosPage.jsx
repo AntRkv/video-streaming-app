@@ -7,21 +7,23 @@ const VideosPage = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const loadVideos = async () => {
-      try {
-        const data = await fetchVideos();
-        setVideos(data);
-        setError(""); 
-        setError("Failed to load videos. Please try again later.");
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
+useEffect(() => {
+  const loadVideos = async () => {
+    try {
+      const data = await fetchVideos();
+      setVideos(data);
+      setError(""); 
+    } catch (error) {
+      setError("Failed to load videos. Please try again later.");
+      console.error(error); 
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    loadVideos();
-  }, []);
+  loadVideos();
+}, []);
+
   
   return (
     <div>

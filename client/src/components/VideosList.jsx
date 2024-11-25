@@ -12,6 +12,7 @@ const VideosList = ({ videos }) => {
               controls
               className="video-preview"
             ></video>
+
             <div className="video-details">
               <h3 className="video-title">{video.title}</h3>
               <p className="video-channel">Channel: {video.channelName}</p>

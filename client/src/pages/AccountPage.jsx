@@ -14,6 +14,7 @@ const AccountPage = () => {
     channelName: "",
   });
 
+  
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -33,8 +34,8 @@ const AccountPage = () => {
         setUpdatedData({
           username: response.data.username,
           email: response.data.email,
-          password: "",
-          channelName: response.data.channelName || "",
+          password: "", 
+          channelName: response.data.channelName || "", 
         });
       } catch (err) {
         console.error("Error fetching user:", err);
@@ -60,39 +61,39 @@ const AccountPage = () => {
     }));
   };
 
-  const handleSave = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const response = await axios.put(
-        "/api/auth/update",
-        {
-          username: updatedData.username,
-          email: updatedData.email,
-          password: updatedData.password || undefined,
-          channelName: updatedData.channelName,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+ const handleSave = async () => {
+   try {
+     const token = localStorage.getItem("token");
+     console.log("Sending data to server:", updatedData); 
 
-      setUser(response.data.user); 
-      setEditMode(false);
-      setError("");
-      setUpdatedData((prev) => ({
-        ...prev,
-        password: "", 
-      }));
-    } catch (err) {
-      console.error("Error updating user:", err);
-      setError(
-        err.response?.data?.errors?.[0]?.msg ||
-          "Failed to update user information. Please try again."
-      );
-    }
-  };
+     const response = await axios.put(
+       "http://localhost:3000/api/auth/update", 
+       {
+         username: updatedData.username,
+         email: updatedData.email,
+         password: updatedData.password || undefined,
+         channelName: updatedData.channelName,
+       },
+       {
+         headers: {
+           Authorization: `Bearer ${token}`,
+         },
+       }
+     );
+
+     setUser(response.data);
+     setEditMode(false);
+     setError("");
+     setUpdatedData((prev) => ({
+       ...prev,
+       password: "",
+     }));
+   } catch (err) {
+     console.error("Error updating user:", err.response?.data || err.message);
+     setError("Failed to update user information. Please try again.");
+   }
+ };
+
 
   if (!user && !error) {
     return <div>Loading...</div>;
@@ -114,7 +115,7 @@ const AccountPage = () => {
                     <input
                       type="text"
                       name="username"
-                      value={updatedData.username}
+                      value={updatedData.username} 
                       onChange={handleInputChange}
                       className="account-input"
                     />
@@ -124,7 +125,7 @@ const AccountPage = () => {
                     <input
                       type="email"
                       name="email"
-                      value={updatedData.email}
+                      value={updatedData.email} 
                       onChange={handleInputChange}
                       className="account-input"
                     />
@@ -134,7 +135,7 @@ const AccountPage = () => {
                     <input
                       type="password"
                       name="password"
-                      value={updatedData.password}
+                      value={updatedData.password} 
                       onChange={handleInputChange}
                       placeholder="Enter new password"
                       className="account-input"
@@ -145,7 +146,7 @@ const AccountPage = () => {
                     <input
                       type="text"
                       name="channelName"
-                      value={updatedData.channelName}
+                      value={updatedData.channelName} 
                       onChange={handleInputChange}
                       className="account-input"
                     />
