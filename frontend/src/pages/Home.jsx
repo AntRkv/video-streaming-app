@@ -36,41 +36,48 @@ const handleDelete = async (id) => {
   }
 };
 
-  return (
-    <div className="container">
-      <h1>Video List</h1>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <ul>
-          {videos.length > 0 ? (
-            videos.map((video) => (
-              <li key={video._id}>
-                <h2>{video.title}</h2>
-                <p>{video.description}</p>
-                <a
-                  href={video.videoUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Watch Video
-                </a>
-                <button
-                  onClick={() => handleDelete(video._id)}
-                  className="button delete"
-                >
-                  Delete
-                </button>
-                {message && <p>{message}</p>}
-              </li>
-            ))
-          ) : (
-            <p>No videos available</p>
-          )}
-        </ul>
-      )}
-    </div>
-  );
+return (
+  <div className="container">
+    <h1>Video List</h1>
+    {loading ? (
+      <p>Loading...</p>
+    ) : (
+      <ul>
+        {videos.length > 0 ? (
+          videos.map((video) => (
+            <li key={video._id}>
+              <h2>{video.title}</h2>
+              <p>{video.description}</p>
+              <a
+                href={video.videoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Watch Video
+              </a>
+              <a href={`/videos/${video._id}`} className="button">
+                View Details
+              </a>
+              <a href={`/videos/edit/${video._id}`} className="button">
+                Edit
+              </a>
+              <button
+                onClick={() => handleDelete(video._id)}
+                className="button delete"
+              >
+                Delete
+              </button>
+              {message && <p>{message}</p>}
+            </li>
+          ))
+        ) : (
+          <p>No videos available</p>
+        )}
+      </ul>
+    )}
+  </div>
+);
+
 };
 
 export default Home;
