@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import axios from "axios";
+import API_BASE_URL from "/Users/anton/Desktop/RTT-43/video-streaming-app/frontend/config.js";
 
 const UploadVideo = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [videoUrl, setVideoUrl] = useState("");
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:3000/api/videos", {
+      const response = await axios.post(`${API_BASE_URL}/videos`, {
         title,
         description,
         videoUrl,
@@ -24,6 +27,8 @@ const UploadVideo = () => {
     } catch (error) {
       console.error("Error uploading video:", error);
       setMessage("Failed to upload video. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -61,6 +66,8 @@ const UploadVideo = () => {
         <button type="submit" className="button">
           Upload
         </button>
+        {loading && <p>Uploading...</p>}
+        {message && <p>{message}</p>}
       </form>
     </div>
   );
