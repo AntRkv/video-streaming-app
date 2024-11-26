@@ -3,15 +3,14 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import API_BASE_URL from "/Users/anton/Desktop/RTT-43/video-streaming-app/frontend/config.js";
-import "../styles/form.css";
 
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,12 +19,17 @@ const Login = () => {
         username,
         password,
       });
-      login(response.data.user, response.data.token);
+      console.log("Login successful:", response.data);
+      const { token } = response.data; 
+      const user = { username }; 
+      login(user, token); 
       setMessage("Login successful!");
-      navigate("/");
+      navigate("/"); 
     } catch (error) {
       console.error("Login failed:", error);
-      setMessage("Invalid username or password");
+      setMessage(
+        error.response?.data?.message || "Invalid username or password."
+      );
     }
   };
 

@@ -6,23 +6,18 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
 
-  // Инициализация состояния при загрузке приложения
+  // Восстановление состояния из localStorage при загрузке приложения
   useEffect(() => {
     const savedUser = localStorage.getItem("user");
     const savedToken = localStorage.getItem("token");
 
     if (savedUser && savedToken) {
-      try {
-        setUser(JSON.parse(savedUser)); 
-        setToken(savedToken);
-      } catch (error) {
-        console.error("Failed to parse user from localStorage:", error);
-        localStorage.removeItem("user");
-        localStorage.removeItem("token");
-      }
+      setUser(JSON.parse(savedUser));
+      setToken(savedToken);
     }
   }, []);
 
+ 
   const login = (userData, authToken) => {
     setUser(userData);
     setToken(authToken);
@@ -30,7 +25,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem("token", authToken);
   };
 
-  
+
   const logout = () => {
     setUser(null);
     setToken(null);
