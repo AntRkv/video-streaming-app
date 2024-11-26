@@ -25,7 +25,8 @@ const UploadVideo = () => {
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`, 
+          },
         }
       );
       console.log("Video uploaded:", response.data);
