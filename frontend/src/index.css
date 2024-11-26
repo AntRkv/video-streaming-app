@@ -1,94 +1,68 @@
-.container {
-  width: 80%;
-  margin: 20px auto;
-  font-family: Arial, sans-serif;
-}
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
 
-li {
-  background: #ffffff;
-  margin: 10px 0;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-h1 {
-  color: #333;
-  text-align: center;
-}
-
-h2 {
-  margin: 0;
-}
-
-p {
-  margin: 5px 0;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
-  color: #007bff;
-  text-decoration: none;
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
 }
-
 a:hover {
-  text-decoration: underline;
+  color: #535bf2;
 }
 
-.button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 14px;
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
 }
 
-.button:hover {
-  background-color: #0056b3;
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
 }
 
-.button.delete {
-  background-color: #dc3545;
-}
-
-.button.delete:hover {
-  background-color: #c82333;
-}
-
-form {
-  background: #fff;
-  padding: 20px;
+button {
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
 }
 
-form div {
-  margin-bottom: 15px;
-}
-
-form label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-form input,
-form textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-form button {
-  margin-top: 10px;
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
 }

@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import axios from "axios";
 import API_BASE_URL from "/Users/anton/Desktop/RTT-43/video-streaming-app/frontend/config.js";
 import AuthContext from "../context/AuthContext";
+import "./uploadVideos.css";
 
 const UploadVideo = () => {
   const [title, setTitle] = useState("");
@@ -9,7 +10,7 @@ const UploadVideo = () => {
   const [videoUrl, setVideoUrl] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const { token } = useContext(AuthContext); 
+  const { token } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,6 +27,7 @@ const UploadVideo = () => {
         {
           headers: {
             Authorization: `Bearer ${token}`,
+          },
         }
       );
       console.log("Video uploaded:", response.data);
@@ -85,6 +87,7 @@ const UploadVideo = () => {
       <a href="/" className="button">
         Back to Home
       </a>
+      <button className="button logout">Logout</button>
     </div>
   );
 };

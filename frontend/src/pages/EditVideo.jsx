@@ -1,49 +1,85 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import { useParams, useNavigate } from "react-router-dom";
+import AuthContext from "../context/AuthContext";
 import API_BASE_URL from "/Users/anton/Desktop/RTT-43/video-streaming-app/frontend/config.js";
+import "./EditVideo.css";
 
 const EditVideo = () => {
-  const { id } = useParams(); 
+  const { id } = useParams();
   const navigate = useNavigate();
-  const [video, setVideo] = useState({
-    title: "",
-    description: "",
-    videoUrl: "",
-  });
+  const { token } = useContext(AuthContext);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [videoUrl, setVideoUrl] = useState("");
   const [message, setMessage] = useState("");
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchVideo = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/videos/${id}`);
-        setVideo(response.data);
+        console.log(`Fetching video with ID: ${id}`);
+        const response = await axios.get(`${API_BASE_URL}/videos/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        console.log("Fetched video data:", response.data);
+        const { title, description, videoUrl } = response.data;
+        setTitle(title);
+        setDescription(description);
+        setVideoUrl(videoUrl);
       } catch (error) {
         console.error("Error fetching video:", error);
-        setMessage("Failed to load video.");
+        if (error.response?.status === 404) {
+          setMessage("Video not found.");
+        } else if (error.response?.status === 401) {
+          navigate("/login");
+        } else {
+          setMessage("Failed to load video data.");
+        }
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchVideo();
-  }, [id]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setVideo({ ...video, [name]: value });
-  };
+  }, [id, token, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    console.log("Submitting update with data:", {
+      title,
+      description,
+      videoUrl,
+    });
     try {
-      await axios.put(`${API_BASE_URL}/videos/${id}`, video);
+      const response = await axios.put(
+        `${API_BASE_URL}/videos/${id}`,
+        { title, description, videoUrl },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("Video updated:", response.data);
       setMessage("Video updated successfully!");
-      setTimeout(() => navigate("/"), 2000); 
+      navigate(`/videos/${id}`);
     } catch (error) {
       console.error("Error updating video:", error);
-      setMessage("Failed to update video.");
+      if (error.response?.status === 401) {
+        setMessage("Unauthorized. Please log in.");
+        navigate("/login");
+      } else {
+        setMessage("Failed to update video. Please try again.");
+      }
     }
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="container">
@@ -54,18 +90,16 @@ const EditVideo = () => {
           <label>Title</label>
           <input
             type="text"
-            name="title"
-            value={video.title}
-            onChange={handleChange}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
             required
           />
         </div>
         <div>
           <label>Description</label>
           <textarea
-            name="description"
-            value={video.description}
-            onChange={handleChange}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
             required
           />
         </div>
@@ -73,14 +107,13 @@ const EditVideo = () => {
           <label>Video URL</label>
           <input
             type="url"
-            name="videoUrl"
-            value={video.videoUrl}
-            onChange={handleChange}
+            value={videoUrl}
+            onChange={(e) => setVideoUrl(e.target.value)}
             required
           />
         </div>
         <button type="submit" className="button">
-          Save Changes
+          Update Video
         </button>
       </form>
     </div>

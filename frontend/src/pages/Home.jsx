@@ -7,15 +7,14 @@ import "./Home.css";
 const Home = () => {
   const [videos, setVideos] = useState([]);
   const [message, setMessage] = useState("");
-  const { token } = useContext(AuthContext); 
+  const { token } = useContext(AuthContext);
 
-  
   useEffect(() => {
     const fetchVideos = async () => {
       try {
         const response = await axios.get(`${API_BASE_URL}/videos`, {
           headers: {
-            Authorization: `Bearer ${token}`, 
+            Authorization: `Bearer ${token}`,
           },
         });
         setVideos(response.data);
@@ -28,16 +27,15 @@ const Home = () => {
     fetchVideos();
   }, [token]);
 
-  
   const handleDelete = async (id) => {
     try {
       const response = await axios.delete(`${API_BASE_URL}/videos/${id}`, {
         headers: {
-          Authorization: `Bearer ${token}`, 
+          Authorization: `Bearer ${token}`,
         },
       });
       console.log("Delete response:", response.data);
-      setVideos((prevVideos) => prevVideos.filter((video) => video._id !== id)); 
+      setVideos((prevVideos) => prevVideos.filter((video) => video._id !== id));
       alert("Video deleted successfully.");
     } catch (error) {
       console.error("Failed to delete video:", error.response || error.message);
