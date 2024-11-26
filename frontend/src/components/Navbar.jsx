@@ -9,7 +9,7 @@ const Navbar = () => {
     console.error(
       "AuthContext is undefined. Ensure the AuthProvider wraps your app."
     );
-    return null; // Выводим пустой компонент, если контекст не доступен
+    return null; 
   }
 
   const { user, logout } = auth;

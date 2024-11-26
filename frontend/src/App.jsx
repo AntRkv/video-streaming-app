@@ -23,6 +23,15 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/videos/edit/:id"
+          element={
+            <ProtectedRoute>
+              <EditVideo />
+            </ProtectedRoute>
+          }
+        />
+
         <Route path="/videos/:id" element={<ViewVideo />} />
         <Route
           path="/videos/edit/:id"

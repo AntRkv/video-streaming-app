@@ -1,53 +1,61 @@
-import API_BASE_URL from "/Users/anton/Desktop/RTT-43/video-streaming-app/frontend/config.js";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import AuthContext from "../context/AuthContext";
+import API_BASE_URL from "/Users/anton/Desktop/RTT-43/video-streaming-app/frontend/config.js";
 import "./Home.css";
-
-
-const response = await axios.get(`${API_BASE_URL}/videos`);
 
 const Home = () => {
   const [videos, setVideos] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
+  const { token } = useContext(AuthContext); 
 
+  
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/videos`);
+        const response = await axios.get(`${API_BASE_URL}/videos`, {
+          headers: {
+            Authorization: `Bearer ${token}`, 
+          },
+        });
         setVideos(response.data);
-        setLoading(false);
       } catch (error) {
-        console.error("Error fetching videos:", error);
-        setLoading(false);
+        console.error("Failed to fetch videos:", error);
+        setMessage("Failed to load videos. Please try again.");
       }
     };
 
     fetchVideos();
-  }, []);
+  }, [token]);
 
-const handleDelete = async (id) => {
-  try {
-    await axios.delete(`${API_BASE_URL}/videos/${id}`);
-    setVideos((prevVideos) => prevVideos.filter((video) => video._id !== id));
-    setMessage("Video deleted successfully!");
-    setTimeout(() => setMessage(""), 3000); 
-  } catch (error) {
-    console.error("Error deleting video:", error);
-    setMessage("Failed to delete video.");
-  }
-};
+  
+  const handleDelete = async (id) => {
+    try {
+      const response = await axios.delete(`${API_BASE_URL}/videos/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`, 
+        },
+      });
+      console.log("Delete response:", response.data);
+      setVideos((prevVideos) => prevVideos.filter((video) => video._id !== id)); 
+      alert("Video deleted successfully.");
+    } catch (error) {
+      console.error("Failed to delete video:", error.response || error.message);
+      alert(
+        error.response?.data?.message ||
+          "Failed to delete video. Please try again."
+      );
+    }
+  };
 
-return (
-  <div className="container">
-    <h1>Video List</h1>
-    {loading ? (
-      <p>Loading...</p>
-    ) : (
-      <ul>
+  return (
+    <div className="container">
+      <h1>Video List</h1>
+      {message && <p className="error-message">{message}</p>}
+      <ul className="video-list">
         {videos.length > 0 ? (
           videos.map((video) => (
-            <li key={video._id}>
+            <li key={video._id} className="video-item">
               <h2>{video.title}</h2>
               <p>{video.description}</p>
               <a
@@ -69,17 +77,14 @@ return (
               >
                 Delete
               </button>
-              {message && <p>{message}</p>}
             </li>
           ))
         ) : (
-          <p>No videos available</p>
+          <p>No videos available.</p>
         )}
       </ul>
-    )}
-  </div>
-);
-
+    </div>
+  );
 };
 
 export default Home;

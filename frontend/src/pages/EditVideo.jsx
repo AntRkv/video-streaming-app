@@ -4,8 +4,8 @@ import axios from "axios";
 import API_BASE_URL from "/Users/anton/Desktop/RTT-43/video-streaming-app/frontend/config.js";
 
 const EditVideo = () => {
-  const { id } = useParams(); // Получаем ID из URL
-  const navigate = useNavigate(); // Для перенаправления
+  const { id } = useParams(); 
+  const navigate = useNavigate();
   const [video, setVideo] = useState({
     title: "",
     description: "",
@@ -38,7 +38,7 @@ const EditVideo = () => {
     try {
       await axios.put(`${API_BASE_URL}/videos/${id}`, video);
       setMessage("Video updated successfully!");
-      setTimeout(() => navigate("/"), 2000); // Перенаправление на главную страницу
+      setTimeout(() => navigate("/"), 2000); 
     } catch (error) {
       console.error("Error updating video:", error);
       setMessage("Failed to update video.");

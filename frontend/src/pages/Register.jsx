@@ -7,6 +7,7 @@ import "../styles/form.css";
 
 const Register = () => {
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState(""); 
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
@@ -16,13 +17,17 @@ const Register = () => {
     try {
       const response = await axios.post(`${API_BASE_URL}/auth/register`, {
         username,
+        email, 
         password,
       });
       setMessage("Registration successful! Redirecting to login...");
-      setTimeout(() => navigate("/login"), 2000); // Перенаправляем на страницу логина
+      setTimeout(() => navigate("/login"), 2000); 
     } catch (error) {
       console.error("Registration failed:", error);
-      setMessage("Registration failed. Please try again.");
+      setMessage(
+        error.response?.data?.message ||
+          "An error occurred during registration."
+      );
     }
   };
 
@@ -37,6 +42,15 @@ const Register = () => {
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>Email</label> 
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
         </div>
