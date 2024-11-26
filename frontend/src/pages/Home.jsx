@@ -1,6 +1,8 @@
 import API_BASE_URL from "/Users/anton/Desktop/RTT-43/video-streaming-app/frontend/config.js";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import "./Home.css";
+
 
 const response = await axios.get(`${API_BASE_URL}/videos`);
 

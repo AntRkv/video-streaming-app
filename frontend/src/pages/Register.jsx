@@ -1,37 +1,34 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../context/AuthContext";
 import API_BASE_URL from "/Users/anton/Desktop/RTT-43/video-streaming-app/frontend/config.js";
 import "../styles/form.css";
 
 
-const Login = () => {
+const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${API_BASE_URL}/auth/login`, {
+      const response = await axios.post(`${API_BASE_URL}/auth/register`, {
         username,
         password,
       });
-      login(response.data.user, response.data.token);
-      setMessage("Login successful!");
-      navigate("/");
+      setMessage("Registration successful! Redirecting to login...");
+      setTimeout(() => navigate("/login"), 2000); // Перенаправляем на страницу логина
     } catch (error) {
-      console.error("Login failed:", error);
-      setMessage("Invalid username or password");
+      console.error("Registration failed:", error);
+      setMessage("Registration failed. Please try again.");
     }
   };
 
   return (
     <div className="container">
-      <h1>Login</h1>
+      <h1>Register</h1>
       {message && <p>{message}</p>}
       <form onSubmit={handleSubmit}>
         <div>
@@ -53,11 +50,11 @@ const Login = () => {
           />
         </div>
         <button type="submit" className="button">
-          Login
+          Register
         </button>
       </form>
     </div>
   );
 };
 
-export default Login;
+export default Register;

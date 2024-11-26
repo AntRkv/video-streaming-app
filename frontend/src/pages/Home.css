@@ -1,0 +1,26 @@
+/* src/pages/Home.css */
+.video-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.video-item {
+  background-color: white;
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.video-item h2 {
+  margin: 0;
+  color: #333;
+}
+
+.video-item p {
+  margin: 5px 0;
+}
+
+.video-item a {
+  margin-right: 10px;
+}

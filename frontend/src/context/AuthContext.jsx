@@ -1,13 +1,27 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 
 const AuthContext = createContext();
 
-const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(() => {
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
+
+  // Инициализация состояния при загрузке приложения
+  useEffect(() => {
     const savedUser = localStorage.getItem("user");
-    return savedUser ? JSON.parse(savedUser) : null;
-  });
-  const [token, setToken] = useState(() => localStorage.getItem("token"));
+    const savedToken = localStorage.getItem("token");
+
+    if (savedUser && savedToken) {
+      try {
+        setUser(JSON.parse(savedUser)); 
+        setToken(savedToken);
+      } catch (error) {
+        console.error("Failed to parse user from localStorage:", error);
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+      }
+    }
+  }, []);
 
   const login = (userData, authToken) => {
     setUser(userData);
@@ -16,6 +30,7 @@ const AuthProvider = ({ children }) => {
     localStorage.setItem("token", authToken);
   };
 
+  
   const logout = () => {
     setUser(null);
     setToken(null);
@@ -29,6 +44,5 @@ const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-
 
 export default AuthContext;
